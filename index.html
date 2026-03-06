@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barcelona's Architect - Antoni Gaudí</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#architect" onclick="smoothScroll('architect')">Barcelona's Architect</a></li>
+            <li><a href="#sagrada" onclick="smoothScroll('sagrada')">La Sagrada Família</a></li>
+            <li><a href="#guell" onclick="smoothScroll('guell')">Park Guell</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <!-- Main Content -->
+        <main>
+            <h1 id="architect">Barcelona's Architect</h1>
+
+            <p class="intro">Antoni Gaudí's incredible buildings bring millions of tourists to Barcelona each year.</p>
+
+            <p>Gaudí's non-conformity, already visible in his teenage years, coupled with his quiet but firm devotion to
+                the church, made a unique foundation for his thoughts and ideas. His search for simplicity, based on his
+                careful observations of nature are quite apparent in his work, from the Park Guell and its incredible
+                sculptures and mosaics, to the Church of the Sacred Family and its organic, bulbous towers.</p>
+
+            <h2 id="sagrada">La Sagrada Família</h2>
+
+            <div class="article-section">
+                <img src="images.jpeg"
+                    alt="Sagrada Família" onclick="openModal(this.src, 'La Sagrada Família - Barcelona')">
+                <p>The complicatedly named and curiously unfinished masterpiece that is the Expiatory Temple of the
+                    Sacred Family is the most visited building in Barcelona. In it, Gaudí combines his vision of nature
+                    and architecture with his devotion to his faith. The Sagrada Família attracts even the non-religious
+                    to its doors in large part due to its tragic story and its still unfinished state, of which the
+                    everpresent scaffolding and cranes are permanent reminders.</p>
+            </div>
+
+            <h2 id="guell">Park Guell</h2>
+
+            <div class="article-section">
+                <img src="images-2.jpeg"
+                    alt="Park Guell Mosaic Lizard"
+                    onclick="openModal(this.src, 'The famous mosaic lizard at Park Guell')">
+                <p>The Park Guell always reminds me of Howard Roark in Ayn Rand's <em>The Fountainhead</em>. Gaudí's
+                    project in the Park Guell was to build a residential community whose residents would love where they
+                    lived. It was never finished.</p>
+            </div>
+            <p>Perhaps that is for the best, since now we <em>all</em> get to enjoy it. The Park Guell is set on a hill
+                overlooking practically all of Barcelona. Its beautiful and even comfortable serpentine bench is filled
+                with foreigners and locals alike every day of the week. Its mosaic lizards have become synonymous with
+                the city itself.</p>
+        </main>
+
+        <!-- Sidebar -->
+        <aside>
+            <h3>Architectural Wonders of Barcelona</h3>
+            <p>Barcelona is home to many architectural wonders in addition to Gaudí's work. Some of them include:</p>
+            <ul>
+                <li>Arc de Triomf</li>
+                <li>The cathedral (La Seu)</li>
+                <li>Gran Teatre del Liceu</li>
+                <li>Pavilion Mies van der Rohe</li>
+                <li>Santa Maria del Mar</li>
+            </ul>
+            <p class="credit">Credit: Barcelona.de</p>
+        </aside>
+    </div>
+
+    <!-- Footer --> <!-- Footer -->
+    <footer>
+        <p>&copy; Copyright 2011.Tech houykeang No.9</p>
+    </footer>
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal" onclick="closeModal()">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImg">
+        <div style="text-align: center; color: white; margin-top: 10px;" id="modalCaption"></div>
+    </div>
+
+    <script>
+        // Smooth scrolling for navigation
+        function smoothScroll(targetId) {
+            event.preventDefault();
+            const element = document.getElementById(targetId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // Modal/Lightbox functionality
+        function openModal(src, caption) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImg');
+            const modalCaption = document.getElementById('modalCaption');
+
+            modal.style.display = 'block';
+            modalImg.src = src.replace('320px', '800px'); // Load higher resolution
+            modalCaption.textContent = caption;
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Add scroll animation for sections
+        window.addEventListener('scroll', function () {
+            const sections = document.querySelectorAll('h2');
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateX(0)';
+                }
+            });
+        });
+
+        // Initialize animations
+        document.addEventListener('DOMContentLoaded', function () {
+            const headings = document.querySelectorAll('h2');
+            headings.forEach(h => {
+                h.style.opacity = '0';
+                h.style.transform = 'translateX(-20px)';
+                h.style.transition = 'all 0.5s ease';
+            });
+
+            // Trigger initial animation
+            setTimeout(() => {
+                window.dispatchEvent(new Event('scroll'));
+            }, 100);
+        });
+    </script>
+
+</body>
+
+</html>
